@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -23,10 +24,10 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
-public class NewsCrawler extends WebCrawler{
+public class AppleNewsCrawler extends WebCrawler{
 	 private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" + "|png|tiff?|mid|mp2|mp3|mp4"
 		      + "|wav|avi|mov|mpeg|ram|m4v|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
-	 private String repoPath = "E:\\Liberty.txt"; 
+	 private String repoPath = "E:\\Apple.txt"; 
 		  /**
 		   * You should implement this function to specify whether the given url
 		   * should be crawled or not (based on your crawling logic).
@@ -34,12 +35,12 @@ public class NewsCrawler extends WebCrawler{
 	 		@Override
 	 		public boolean shouldVisit(WebURL url) {
 		    String href = url.getURL().toLowerCase();
-		    if(href.startsWith("http://news.ltn.com.tw/news/"))
+		    if(href.startsWith("http://www.appledaily.com.tw/"))
 		    {
 		    	
 		    }
 		    
-		    return href.startsWith("http://news.ltn.com.tw/news/");
+		    return href.startsWith("http://www.appledaily.com.tw/");
 		  }
 
 		  /**
@@ -73,16 +74,19 @@ public class NewsCrawler extends WebCrawler{
 		      /*
 		       * Get content and timestamp from html
 		       */
-		      Elements textContent = doc.select("#newstext p");
-		      Elements newsTime = doc.select("#newstext > span");
+		      Elements textContent = doc.select(".articulum > p,.articulum >h2");
+		      Elements newsTime = doc.select(".gggs > time");
 		      
 		      String content = "";
 		      for(int section = 0 ; section<textContent.size() ; section++)
 		      {
-		    	  content = content + textContent.get(section).text();
+		    	  content = content +"\t"+ textContent.get(section).text();
 		      }
+		      DecimalFormat twoDeg = new DecimalFormat("00");
 		      String title = htmlParseData.getTitle();
-		      String time = newsTime.get(0).text();
+		      String time = newsTime.get(0).text().split("年")[0]
+		    		  +"-"+twoDeg.format(Integer.parseInt(newsTime.get(0).text().split("年")[1].split("月")[0]))
+		    		  +"-"+twoDeg.format(Integer.parseInt(newsTime.get(0).text().split("年")[1].split("月")[1].replace("日","")));
 		      System.out.println("Time: " +  time);
 		      System.out.println("Title: " + title);
 		      System.out.println("Text: " +  content);
@@ -97,7 +101,7 @@ public class NewsCrawler extends WebCrawler{
 		      if(!isDuplicated(title)){
 			    try {
 					FileWriter fw = new FileWriter(new File(repoPath),true);
-					fw.append(newsTime.get(0).text() + "\t" + htmlParseData.getTitle() + "\t" + content + "\n");
+					fw.append(time + "\t" + htmlParseData.getTitle() + "\t" + content + "\n");
 					fw.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

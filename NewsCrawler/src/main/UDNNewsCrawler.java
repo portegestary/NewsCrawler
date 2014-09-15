@@ -23,10 +23,10 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
-public class NewsCrawler extends WebCrawler{
+public class UDNNewsCrawler extends WebCrawler{
 	 private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" + "|png|tiff?|mid|mp2|mp3|mp4"
 		      + "|wav|avi|mov|mpeg|ram|m4v|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
-	 private String repoPath = "E:\\Liberty.txt"; 
+	 private String repoPath = "E:\\912_1441.txt"; 
 		  /**
 		   * You should implement this function to specify whether the given url
 		   * should be crawled or not (based on your crawling logic).
@@ -34,12 +34,8 @@ public class NewsCrawler extends WebCrawler{
 	 		@Override
 	 		public boolean shouldVisit(WebURL url) {
 		    String href = url.getURL().toLowerCase();
-		    if(href.startsWith("http://news.ltn.com.tw/news/"))
-		    {
-		    	
-		    }
-		    
-		    return href.startsWith("http://news.ltn.com.tw/news/");
+		    System.out.println("visit!");
+		    return href.startsWith("http://hunteq.com/newscgi/ttswebx?");
 		  }
 
 		  /**
@@ -73,15 +69,15 @@ public class NewsCrawler extends WebCrawler{
 		      /*
 		       * Get content and timestamp from html
 		       */
-		      Elements textContent = doc.select("#newstext p");
-		      Elements newsTime = doc.select("#newstext > span");
-		      
+		      Elements textContent = doc.select("body > form > center > table:nth-child(2) > tbody > tr > td > font:nth-child(4) > table > tbody > tr:nth-child(4) > td");
+		      Elements newsTime = doc.select("body > form > center > table:nth-child(2) > tbody > tr > td > font:nth-child(4) > table > tbody > tr:nth-child(1) > td:nth-child(4) > font");
+		      Elements textTitle = doc.select("body > form > center > table:nth-child(2) > tbody > tr > td > font:nth-child(4) > table > tbody > tr:nth-child(2) > td:nth-child(2)");
 		      String content = "";
 		      for(int section = 0 ; section<textContent.size() ; section++)
 		      {
 		    	  content = content + textContent.get(section).text();
 		      }
-		      String title = htmlParseData.getTitle();
+		      String title = textTitle.get(0).text();
 		      String time = newsTime.get(0).text();
 		      System.out.println("Time: " +  time);
 		      System.out.println("Title: " + title);
@@ -97,7 +93,7 @@ public class NewsCrawler extends WebCrawler{
 		      if(!isDuplicated(title)){
 			    try {
 					FileWriter fw = new FileWriter(new File(repoPath),true);
-					fw.append(newsTime.get(0).text() + "\t" + htmlParseData.getTitle() + "\t" + content + "\n");
+					fw.append(newsTime.get(0).text() + "\t" + htmlParseData.getTitle() + "\n");
 					fw.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

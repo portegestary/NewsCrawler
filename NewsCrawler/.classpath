@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="jar/crawler4j/tagsoup-1.2.1.jar"/>
 	<classpathentry kind="lib" path="jar/crawler4j/tika-core-1.0.jar"/>
 	<classpathentry kind="lib" path="jar/crawler4j/tika-parsers-1.0.jar"/>
+	<classpathentry kind="lib" path="jar/jsoup/jsoup-1.7.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

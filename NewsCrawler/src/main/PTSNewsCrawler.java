@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.apache.http.Header;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import parser.NewsHtmlParseData;
@@ -23,10 +24,10 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
-public class NewsCrawler extends WebCrawler{
+public class PTSNewsCrawler extends WebCrawler{
 	 private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" + "|png|tiff?|mid|mp2|mp3|mp4"
 		      + "|wav|avi|mov|mpeg|ram|m4v|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
-	 private String repoPath = "E:\\Liberty.txt"; 
+	 private String repoPath = "E:\\PTS.txt"; 
 		  /**
 		   * You should implement this function to specify whether the given url
 		   * should be crawled or not (based on your crawling logic).
@@ -34,12 +35,8 @@ public class NewsCrawler extends WebCrawler{
 	 		@Override
 	 		public boolean shouldVisit(WebURL url) {
 		    String href = url.getURL().toLowerCase();
-		    if(href.startsWith("http://news.ltn.com.tw/news/"))
-		    {
-		    	
-		    }
-		    
-		    return href.startsWith("http://news.ltn.com.tw/news/");
+		    //System.out.println("visit!");
+		    return href.startsWith("http://web.pts.org.tw/php/news/pts_news/") ;
 		  }
 
 		  /**
@@ -65,6 +62,7 @@ public class NewsCrawler extends WebCrawler{
 		   // System.out.println("Anchor text: " + anchor);
 
 		    if (page.getParseData() instanceof HtmlParseData) {
+		    	System.out.println("here");
 		    	HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
 		      String text = htmlParseData.getText();
 		      String html = htmlParseData.getHtml();
@@ -73,16 +71,14 @@ public class NewsCrawler extends WebCrawler{
 		      /*
 		       * Get content and timestamp from html
 		       */
-		      Elements textContent = doc.select("#newstext p");
-		      Elements newsTime = doc.select("#newstext > span");
-		      
-		      String content = "";
-		      for(int section = 0 ; section<textContent.size() ; section++)
-		      {
-		    	  content = content + textContent.get(section).text();
-		      }
-		      String title = htmlParseData.getTitle();
-		      String time = newsTime.get(0).text();
+		      System.out.println(doc.text());
+		      Element textContent = doc.select("p.Page").get(0);
+		      Element newsTime = doc.select("p.Page").get(1);
+		      Elements textTitle = doc.select(".News_page_tittle > table").get(1).getElementsByTag("td");
+		      String content = textContent.text();
+		     
+		      String title = textTitle.text();
+		      String time = newsTime.text().split(" ")[0].substring(1);
 		      System.out.println("Time: " +  time);
 		      System.out.println("Title: " + title);
 		      System.out.println("Text: " +  content);
@@ -97,7 +93,7 @@ public class NewsCrawler extends WebCrawler{
 		      if(!isDuplicated(title)){
 			    try {
 					FileWriter fw = new FileWriter(new File(repoPath),true);
-					fw.append(newsTime.get(0).text() + "\t" + htmlParseData.getTitle() + "\t" + content + "\n");
+					fw.append(time + "\t" + title + "\t" + content +"\n");
 					fw.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
