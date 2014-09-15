@@ -62,7 +62,7 @@ public class NewsCrawlerController {
 	     */
 	    config1.setMaxPagesToFetch(8000);
 	    config2.setMaxPagesToFetch(10000);
-	    config3.setMaxPagesToFetch(25000);
+	    config3.setMaxPagesToFetch(30000);
 	    
 	    /*
 	     * Do you need to set a proxy? If so, you can use:

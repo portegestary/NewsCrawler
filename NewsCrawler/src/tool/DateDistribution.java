@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 public class DateDistribution {
-	private static String TARGETFILENAME = "E:\\Apple.txt"; 
+	private static String TARGETFILENAME = "E:\\Apple2.txt"; 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GregorianCalendar start =new  GregorianCalendar(2014, 3, 14);
@@ -26,6 +26,7 @@ public class DateDistribution {
 			DecimalFormat twoDeg = new DecimalFormat("00");
 			while((line=br.readLine())!=null)
 			{
+				
 				all.add(line.split("\t")[0].split("  ")[0]);
 			}
 			for(;start.before(end)||start.equals(end);start.add(Calendar.DATE, 1))

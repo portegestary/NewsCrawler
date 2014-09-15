@@ -80,7 +80,7 @@ public class AppleNewsCrawler extends WebCrawler{
 		      String content = "";
 		      for(int section = 0 ; section<textContent.size() ; section++)
 		      {
-		    	  content = content +"\t"+ textContent.get(section).text();
+		    	  content = content +""+ textContent.get(section).text();
 		      }
 		      DecimalFormat twoDeg = new DecimalFormat("00");
 		      String title = htmlParseData.getTitle();

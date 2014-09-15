@@ -19,16 +19,26 @@ public class ModifyDateFormat {
 		File targetFile = new File("E:\\Apple2.txt"); 
 		try {
 			String line = "";
+			
 			String entity[];
 			DecimalFormat twoDeg = new DecimalFormat("00");
 			BufferedReader br= new BufferedReader(new InputStreamReader(new FileInputStream(targetFile)));
 			while((line=br.readLine())!=null)
 			{
+				String []addEntity = new String [3];
+				String content = "";
 				entity = line.split("\t");
 				entity[0] = entity[0].split("年")[0]
 			    		  +"-"+twoDeg.format(Integer.parseInt(entity[0].split("年")[1].split("月")[0]))
 			    		  +"-"+twoDeg.format(Integer.parseInt(entity[0].split("年")[1].split("月")[1].replace("日","")));
-				all.add(entity);
+				for(int cont = 2;cont<(entity.length)-2;cont++)
+				{
+					content = content + entity[cont] +"     ";
+				}
+				addEntity[0] = entity[0];
+				addEntity[1] = entity[1];
+				addEntity[2] = content;
+				all.add(addEntity);
 				
 			}
 			br.close();
@@ -46,15 +56,12 @@ public class ModifyDateFormat {
         BufferedWriter bw = new BufferedWriter(fw);
 		for(int count = 0 ;count<all.size();count++)
 		{
-			System.out.println(all.get(count)[0]);
-			System.out.println(all.get(count)[1]);
-			
 			if(all.get(count).length<3)
 			{
-				bw.append(all.get(count)[0]+"\t"+all.get(count)[1]);
+				bw.append(all.get(count)[0]+"\t"+all.get(count)[1]+"\n");
 			}
 			else
-			bw.append(all.get(count)[0]+"\t"+all.get(count)[1]+"\t"+all.get(count)[2]);
+				bw.append(all.get(count)[0]+"\t"+all.get(count)[1]+"\t"+all.get(count)[2]+"\n");
 		}
 		
 		bw.close();
