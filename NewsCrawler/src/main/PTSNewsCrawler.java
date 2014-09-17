@@ -93,7 +93,7 @@ public class PTSNewsCrawler extends WebCrawler{
 		      if(!isDuplicated(title)){
 			    try {
 					FileWriter fw = new FileWriter(new File(repoPath),true);
-					fw.append(time + "\t" + title + "\t" + content +"\n");
+					fw.append(time + "\t" + title + "\t" + url + "\t" + content +"\n");
 					fw.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

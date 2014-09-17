@@ -101,7 +101,7 @@ public class AppleNewsCrawler extends WebCrawler{
 		      if(!isDuplicated(title)){
 			    try {
 					FileWriter fw = new FileWriter(new File(repoPath),true);
-					fw.append(time + "\t" + htmlParseData.getTitle() + "\t" + content + "\n");
+					fw.append(time + "\t" + htmlParseData.getTitle() + "\t" + url + "\t" + content + "\n");
 					fw.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
