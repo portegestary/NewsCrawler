@@ -23,7 +23,7 @@ public class NewsCrawlerController {
 	     * crawlStorageFolder is a folder where intermediate crawl data is
 	     * stored.
 	     */
-	    String crawlStorageFolder = "E:\\crawled2\\";
+	    String crawlStorageFolder = "D:\\crawled2";
 
 	    /*
 	     * numberOfCrawlers shows the number of concurrent threads that should
@@ -60,9 +60,14 @@ public class NewsCrawlerController {
 	     * is -1 for unlimited number of pages
 	     * 
 	     */
+	    /*
 	    config1.setMaxPagesToFetch(8000);
 	    config2.setMaxPagesToFetch(10000);
 	    config3.setMaxPagesToFetch(30000);
+	    */
+	    config1.setMaxPagesToFetch(80);
+	    config2.setMaxPagesToFetch(10);
+	    config3.setMaxPagesToFetch(30);
 	    
 	    /*
 	     * Do you need to set a proxy? If so, you can use:
@@ -139,8 +144,8 @@ public class NewsCrawlerController {
 		    controller2.addSeed("http://web.pts.org.tw/php/news/pts_news/news_calander.php?d="+dateInUrl2+"&page=0");
 		    controller2.addSeed("http://web.pts.org.tw/php/news/pts_news/news_calander.php?d="+dateInUrl2+"&page=1");
 		    controller2.addSeed("http://web.pts.org.tw/php/news/pts_news/news_calander.php?d="+dateInUrl2+"&page=2");
-		    
-		    controller3.addSeed("http://www.appledaily.com.tw/appledaily/archive/"+dateInUrl1);
+		    controller3.addSeed("http://www.appledaily.com.tw/realtimenews/article/recommend/20160223/801022/");
+		    //controller3.addSeed("http://www.appledaily.com.tw/appledaily/archive/"+dateInUrl1);
 		    start.add(Calendar.DATE, 1);
 	    }
 

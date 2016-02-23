@@ -26,7 +26,7 @@ import edu.uci.ics.crawler4j.url.WebURL;
 public class NewsCrawler extends WebCrawler{
 	 private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" + "|png|tiff?|mid|mp2|mp3|mp4"
 		      + "|wav|avi|mov|mpeg|ram|m4v|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
-	 private String repoPath = "E:\\Liberty.txt"; 
+	 private String repoPath = "D:\\crawled2\\Liberty.txt"; 
 		  /**
 		   * You should implement this function to specify whether the given url
 		   * should be crawled or not (based on your crawling logic).

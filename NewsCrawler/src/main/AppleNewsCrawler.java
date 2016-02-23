@@ -27,7 +27,7 @@ import edu.uci.ics.crawler4j.url.WebURL;
 public class AppleNewsCrawler extends WebCrawler{
 	 private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" + "|png|tiff?|mid|mp2|mp3|mp4"
 		      + "|wav|avi|mov|mpeg|ram|m4v|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
-	 private String repoPath = "E:\\Apple.txt"; 
+	 private String repoPath = "D:\\crawled2\\Apple.txt"; 
 		  /**
 		   * You should implement this function to specify whether the given url
 		   * should be crawled or not (based on your crawling logic).
@@ -83,10 +83,11 @@ public class AppleNewsCrawler extends WebCrawler{
 		    	  content = content +""+ textContent.get(section).text();
 		      }
 		      DecimalFormat twoDeg = new DecimalFormat("00");
+		      System.out.println("HERE!:"+newsTime.get(0).text().split("年")[1].split("月")[1].split("日")[0]);
 		      String title = htmlParseData.getTitle();
 		      String time = newsTime.get(0).text().split("年")[0]
 		    		  +"-"+twoDeg.format(Integer.parseInt(newsTime.get(0).text().split("年")[1].split("月")[0]))
-		    		  +"-"+twoDeg.format(Integer.parseInt(newsTime.get(0).text().split("年")[1].split("月")[1].replace("日","")));
+		    		  +"-"+twoDeg.format(Integer.parseInt(newsTime.get(0).text().split("年")[1].split("月")[1].split("日")[0].replace("日","")));
 		      System.out.println("Time: " +  time);
 		      System.out.println("Title: " + title);
 		      System.out.println("Text: " +  content);
