@@ -2,7 +2,7 @@
 from selenium import webdriver
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from PTTNewsCrawler import PTTNewsCrawler
+from NewsCrawler_PTT import NewsCrawlerPTT
 from RepositoryContext import RepositoryContext
 
 
@@ -16,7 +16,7 @@ class Trigger:
 
 		browser = webdriver.Chrome()
 		boardName = "Tainan"
-		crawler = PTTNewsCrawler()
-		crawler.configure(artNumber=500, delay=3, 
-			boardName='Tainan', startPage = 33)
-		crawler.crawl(db, app)
+		crawler = NewsCrawlerPTT()
+		crawler.configure(artNumber=5000, delay=3, 
+			boardName='Tainan', startPage = 20)
+		crawler.crawlFromOld(db, app)
